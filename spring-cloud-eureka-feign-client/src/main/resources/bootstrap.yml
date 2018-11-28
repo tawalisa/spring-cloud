@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: foo
+  cloud:
+    config:
+#      env: default # optional
+      label: master # optional
+      profile: dev
+      uri: http://localhost:8888 # optional
