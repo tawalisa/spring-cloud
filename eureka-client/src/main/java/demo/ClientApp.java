@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -14,13 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.discovery.EurekaClient;
 
+import demo.feign.GreetingClient;
+
 @EnableAutoConfiguration
 @ComponentScan
 @RestController
 @RefreshScope
-//@EnableEurekaClient
-@EnableDiscoveryClient
-public class ClientApp implements GreetingController{
+@SpringBootApplication
+@EnableEurekaClient
+public class ClientApp implements GreetingClient{
     @Value("${bar:World!}")
     String bar;
 
@@ -34,6 +37,7 @@ public class ClientApp implements GreetingController{
     
     @RequestMapping("/greeting")
     public String greeting() {
+    	System.out.println("=============================");
         return String.format("Hello from '%s'!", eurekaClient.getApplication(appName).getName());
     }
 //    @RequestMapping("/")
